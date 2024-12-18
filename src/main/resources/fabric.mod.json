@@ -1,0 +1,26 @@
+{
+	"schemaVersion": 1,
+	"id": "aoc_2024_d15",
+	"version": "${version}",
+	"name": "aoc_2024_d15",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"birblett"
+	],
+	"contact": {
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/aoc_2024_d15/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": []
+	},
+	"mixins": [
+		"aoc_2024_d15.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.21",
+		"java": ">=21"
+	}
+}

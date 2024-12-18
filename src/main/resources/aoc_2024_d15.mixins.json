@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.birblett.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AbstractMinecartEntityMixin",
+    "ArmorStandEntityMixin",
+    "CommandManagerMixin",
+    "PistonHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}
