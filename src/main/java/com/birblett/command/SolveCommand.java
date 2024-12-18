@@ -6,7 +6,6 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.vehicle.MinecartEntity;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -39,7 +38,6 @@ public class SolveCommand {
                     ServerWorld world = player.getServerWorld();
                     int x = (int) (player.getX()) + (board[0].length() / (p2 ? 1 : 2)), y = (int) player.getY(), z = (int) (player.getZ()) - (board.length / (p2 ? 1 : 2));
                     for (int dx = 0; dx < board.length; dx++) {
-                        StringBuilder st = new StringBuilder();
                         for (int az = 0; az < board[0].length(); az++) {
                             int dz = p2 ? az * 2 : az;
                             switch (board[dx].charAt(az)) {

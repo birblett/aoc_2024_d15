@@ -39,7 +39,7 @@ public class AbstractMinecartEntityMixin implements Solver {
     @Unique private int deathCounter = 0;
     @Unique private int score = 0;
     @Unique private static final BlockPos[] OFFSET = new BlockPos[]{new BlockPos(1, 0, 0), null, new BlockPos(-1, 0, 0),
-                                                              new BlockPos(0, 0, 1), new BlockPos(0, 0, -1)};
+                                                              new BlockPos(0, 0, -1), new BlockPos(0, 0, 1)};
 
     @Override
     public void setInstructions(String s, boolean b) {
@@ -67,7 +67,7 @@ public class AbstractMinecartEntityMixin implements Solver {
         AbstractMinecartEntity self = (AbstractMinecartEntity) (Object) this;
         if (self.getWorld() instanceof ServerWorld world && this.instructions != null) {
             if (this.isIndex < this.instructions.length()) {
-                switch ((this.state = (this.state + 1) % 3)) {
+                switch (this.state) {
                     case 0:
                         BlockPos offset = AbstractMinecartEntityMixin.OFFSET[((this.instructions.charAt(this.isIndex)) % 9) >> 1];
                         Direction d = Direction.fromVector(-offset.getX(), offset.getY(), -offset.getZ());
@@ -81,18 +81,19 @@ public class AbstractMinecartEntityMixin implements Solver {
                         if (this.last != null) world.breakBlock(this.last, false);
                         this.isIndex++;
                 }
+                this.state = (this.state + 1) % 3;
             } else {
                 if (this.isIndex++ == this.instructions.length()) {
                     self.setNoGravity(true);
                     self.setInvulnerable(true);
                     BlockPos centerPos = this.pos1.add(this.pos2.add(0, 0, -1));
-                    self.teleport(world, centerPos.getX() / 2.0, this.pos1.getY() + 14, centerPos.getZ() / 2.0, Set.of(), 0, 0);
+                    self.teleport(world, centerPos.getX() / 2.0, centerPos.getY(), centerPos.getZ() / 2.0, Set.of(), 0, 0);
                     if (self.getFirstPassenger() instanceof ServerPlayerEntity player) {
                         world.setBlockState(self.getBlockPos().add(0, - 4, 0), Blocks.BARRIER.getDefaultState());
                         player.teleport(world, self.getX(), self.getY() - 3, self.getZ(), -90, 90);
                     }
                     this.tntPos = new ArrayList<>(List.of(pos1.add(0, 2, 0)));
-                } else if (this.isIndex == this.instructions.length() + 40)
+                } else if (this.isIndex == this.instructions.length() + 50)
                     this.firePos = new ArrayList<>(List.of(BlockPos.ofFloored(0, -3, 0)));
                 if ((this.state++ & 1) == 0) {
                     if (this.tntPos != null && !this.tntPos.isEmpty()) {
